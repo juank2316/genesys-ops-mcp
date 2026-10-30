@@ -11,7 +11,7 @@ Requisitos: Windows, [`uv`](https://docs.astral.sh/uv/), Git, Claude (Code) y ac
 **1. Instalar el MCP** (una sola vez):
 
 ```powershell
-uv tool install git+https://github.com/<usuario>/genesys-ops-mcp
+uv tool install git+https://github.com/juank2316/genesys-ops-mcp
 ```
 
 **2. Cargar los secretos de los clientes.** Pedile al responsable el archivo `.secrets` y, **por otro canal**, su
@@ -179,7 +179,7 @@ Para `api_call`, se necesitan los permisos que `api_describe` muestra para cada 
 ## Desarrollo
 
 ```powershell
-git clone https://github.com/<usuario>/genesys-ops-mcp
+git clone https://github.com/juank2316/genesys-ops-mcp
 cd genesys-ops-mcp
 uv sync
 uv run pytest
