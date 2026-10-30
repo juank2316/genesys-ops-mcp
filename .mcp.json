@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "genesys": {
+      "command": "uv",
+      "args": ["run", "--quiet", "genesys-mcp"]
+    }
+  }
+}

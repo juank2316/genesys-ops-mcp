@@ -1,0 +1,19 @@
+# Credenciales, auditoría, caché y overrides locales: NUNCA subir
+.genesys_mcp/
+.env
+*.secrets
+Credenciales*.txt
+
+# Configuración local de Claude Code de cada persona
+.claude/settings.local.json
+
+# Proyectos de clientes que no son parte del MCP
+lambda_espera_asesoria/
+
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+dist/
+build/
+*.egg-info/

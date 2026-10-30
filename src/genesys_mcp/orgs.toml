@@ -1,0 +1,227 @@
+# Lista de clientes (perfiles de org) del equipo. Viaja con el paquete y está en Git:
+# NUNCA pongas client_secret acá. Cada secret se lee de la variable de entorno de usuario
+# indicada en client_secret_env (se distribuyen con `genesys-mcp secrets export/import`).
+#
+# Para agregar o cambiar un cliente: editá este archivo, subí la versión y que el equipo
+# corra `uv tool upgrade genesys-ops-mcp`.
+#
+# Regiones: sa-east-1 = São Paulo, us-east-1 = US East, mx-central-1 = México.
+# environment: lab | dev | qa | prod.  aliases: nombres alternativos (únicos entre todas las orgs).
+# read_only = true bloquea toda escritura; allow_delete = false bloquea los DELETE.
+
+# ---------------------------------------------------------------- Laboratorio
+
+[orgs.lab]
+display_name = "Laboratorio InfoSys"
+environment = "lab"
+aliases = ["laboratorio", "informationsystems"]
+description = "Org de laboratorio (Information Systems)"
+region = "us-east-1"
+client_id = "2523cffa-62f1-458c-9b72-ee4681dc7f2c"
+client_secret_env = "GENESYS_LAB"
+read_only = false
+allow_delete = true
+
+# ---------------------------------------------------------------- Clientes existentes
+
+[orgs.comfama]
+display_name = "Comfama"
+environment = "prod"
+aliases = ["Comfama principal"]
+description = "Org principal de comfama"
+region = "mx-central-1"
+client_id = "9a1ea24e-f58f-400d-9f98-28f07e3347d8"
+client_secret_env = "GENESYS_COMFAMA_PROD"
+read_only = false
+allow_delete = true
+
+[orgs.comfama_BKP]
+display_name = "Comfama BKP"
+environment = "prod"
+aliases = ["Comfama BKP", "Comfama recuperacion", "Comfama Alterno"]
+description = "Org secundaria de comfama"
+region = "sa-east-1"
+client_id = "574ca41a-8fd8-483f-b773-b497b99f1cce"
+client_secret_env = "GENESYS_COMFAMA_BKP"
+read_only = false
+allow_delete = true
+
+[orgs.TCC]
+display_name = "TCC"
+environment = "prod"
+aliases = ["tcc"]
+description = "Org principal de TCC"
+region = "mx-central-1"
+client_id = "d558f5ee-acce-4d9f-ac6d-4dffdd856b46"
+client_secret_env = "GENESYS_TCC_PROD"
+read_only = false
+allow_delete = true
+
+[orgs.Meli_ARG]
+display_name = "Meli Argentina/Chile"
+environment = "prod"
+aliases = ["Meli Argentina", "Mercado libre Argentina", "Meli Chile", "mercado Libre Chile"]
+description = "Organizacion que se utiliza para mercado libre argentina y Chile"
+region = "mx-central-1"
+client_id = "241ba3e4-1972-461b-9476-dbfac6ba25ba"
+client_secret_env = "GENESYS_MELI_ARG_PROD"
+read_only = false
+allow_delete = true
+
+[orgs.Meli_MX]
+display_name = "Meli Mexico"
+environment = "prod"
+aliases = ["Meli mexico", "Mercado libre mexico"]
+description = "Organizacion que se utiliza para mercado libre mexico"
+region = "mx-central-1"
+client_id = "07d55a05-1893-4c84-83ee-cbc32c77b9ff"
+client_secret_env = "GENESYS_Meli_MX_PROD"
+read_only = false
+allow_delete = true
+
+[orgs.SCARE]
+display_name = "SCARE"
+environment = "prod"
+aliases = ["sacare", "argessa", "vitartis"]
+description = "Organizacion que se utiliza para SCARE"
+region = "mx-central-1"
+client_id = "7c36b7e7-b665-4005-a30f-954952177c58"
+client_secret_env = "GENESYS_SCARE_PROD"
+read_only = false
+allow_delete = true
+
+# ---------------------------------------------------------------- Clientes nuevos (2026-10-30)
+# Región detectada probando el login; org real leída de /organizations/me.
+# Nombres, alias y descripciones son base: editalos a gusto.
+
+[orgs.sistecredito]
+display_name = "Sistecredito"
+environment = "prod"
+aliases = []
+description = "Org de Sistecredito"
+region = "sa-east-1"
+client_id = "6e1bd53a-4477-4534-99e4-10f5acf76339"
+client_secret_env = "GENESYS_SISTECREDITO_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.crezcamos]
+display_name = "Crezcamos"
+environment = "prod"
+aliases = []
+description = "Org de Crezcamos"
+region = "sa-east-1"
+client_id = "4a3e8f8e-1a36-4cc2-a926-474184c1cd08"
+client_secret_env = "GENESYS_CREZCAMOS_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.sabbag]
+display_name = "Sabbag Radiólogos"
+environment = "prod"
+aliases = ["sabbagradiologos"]
+description = "Org de Sabbag Radiólogos"
+region = "sa-east-1"
+client_id = "e301eb0e-ecf8-437e-b34c-eeb9768b9094"
+client_secret_env = "GENESYS_SABBAG_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.alegra]
+display_name = "Alegra"
+environment = "prod"
+aliases = []
+description = "Org de Alegra"
+region = "sa-east-1"
+client_id = "f398bf3b-b8f1-4bfb-a9f1-bf244c119bc1"
+client_secret_env = "GENESYS_ALEGRA_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.skandia]
+display_name = "Skandia"
+environment = "prod"
+aliases = []
+description = "Org de Skandia"
+region = "mx-central-1"
+client_id = "e27deca7-e4af-4eb8-bbb6-ae98f51cd484"
+client_secret_env = "GENESYS_SKANDIA_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.addi_1]
+display_name = "Addi"
+environment = "prod"
+aliases = ["addi1"]
+description = "Org Addi (addi1)"
+region = "us-east-1"
+client_id = "bca49c22-3d73-466a-a7ca-17c313404ba1"
+client_secret_env = "GENESYS_ADDI_1_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.addi_2]
+display_name = "Addi CF"
+environment = "prod"
+aliases = ["addi2", "Addi CF"]
+description = "Org Addi CF (addi2)"
+region = "us-east-1"
+client_id = "1de184d2-3767-48ba-a583-889f168dc9eb"
+client_secret_env = "GENESYS_ADDI_2_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.monitoreo_inteligente]
+display_name = "Monitoreo Inteligente"
+environment = "prod"
+aliases = ["monitoreointeligente"]
+description = "Org de Monitoreo Inteligente"
+region = "sa-east-1"
+client_id = "c30440da-51c1-4415-99fc-4295d7dde300"
+client_secret_env = "GENESYS_MONITOREO_INTELIGENTE_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.banrep]
+display_name = "BanRep"
+environment = "prod"
+aliases = []
+description = "Org del Banco de la República"
+region = "us-east-1"
+client_id = "1e403c42-566f-4324-8b6c-40569c77ca0f"
+client_secret_env = "GENESYS_BANREP_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.colmedica]
+display_name = "Grupo Colmédica"
+environment = "prod"
+aliases = ["grupocolmedica"]
+description = "Org de Grupo Colmédica"
+region = "us-east-1"
+client_id = "b11b55f8-5f1b-4d83-9085-23070d162d51"
+client_secret_env = "GENESYS_COLMEDICA_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.credishop]
+display_name = "Credishop"
+environment = "prod"
+aliases = []
+description = "Org de Credishop"
+region = "sa-east-1"
+client_id = "9cdd9daf-f90b-45cf-8e1d-ae78f36d30c1"
+client_secret_env = "GENESYS_CREDISHOP_PROD"
+read_only = false
+allow_delete = false
+
+[orgs.previsalud]
+display_name = "Previsalud"
+environment = "prod"
+aliases = []
+description = "Org de Previsalud"
+region = "sa-east-1"
+client_id = "43e77467-856e-4565-8648-114568bb1ebc"
+client_secret_env = "GENESYS_PREVISALUD_PROD"
+read_only = false
+allow_delete = false

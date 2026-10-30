@@ -1,0 +1,48 @@
+# Copiá este archivo a .genesys_mcp/orgs.toml (en este proyecto, gitignored)
+# o a %USERPROFILE%\.genesys_mcp\orgs.toml (por usuario) y completá las credenciales.
+#
+# Cada org usa un OAuth client de tipo "Client Credentials" creado en esa org
+# (Admin > Integrations > OAuth), con un rol que tenga los permisos necesarios.
+#
+# No hay org por defecto: cada operación debe nombrar el cliente (por el nombre de la sección o un alias).
+#
+# Campos de cada cliente:
+#   display_name  nombre legible que se muestra en cada plan y resultado
+#   environment   lab | dev | qa | prod   (si se omite, se asume prod)
+#   aliases       otros nombres con los que se puede referir al cliente; deben ser únicos entre todas las orgs
+#   region        us-east-1 (US East), sa-east-1 (São Paulo), mx-central-1 (México), ... o el dominio
+#   read_only     true = bloquea toda escritura
+#   allow_delete  false = bloquea DELETE (usuarios, colas, scripts...)
+# Convención sugerida para el nombre de la sección: <cliente>-<ambiente>, p.ej. acme-prod, acme-qa.
+
+[orgs.lab]
+display_name = "Laboratorio InfoSys"
+environment = "lab"
+aliases = ["laboratorio"]
+description = "Org de laboratorio"
+region = "us-east-1"
+client_id = "REEMPLAZAR"
+client_secret = "REEMPLAZAR"    # o client_secret_env = "GENESYS_LAB_SECRET"
+read_only = false
+allow_delete = true
+
+# [orgs.acme-prod]
+# display_name = "ACME Brasil"
+# environment = "prod"
+# aliases = ["acme"]
+# description = "Org productiva de ACME"
+# region = "sa-east-1"
+# client_id = "REEMPLAZAR"
+# client_secret_env = "GENESYS_ACME_PROD_SECRET"
+# read_only = true              # empezá en solo lectura; cambiá a false cuando corresponda
+# allow_delete = false
+
+# [orgs.globex-prod]
+# display_name = "Globex México"
+# environment = "prod"
+# aliases = ["globex"]
+# region = "mx-central-1"
+# client_id = "REEMPLAZAR"
+# client_secret_env = "GENESYS_GLOBEX_PROD_SECRET"
+# read_only = true
+# allow_delete = false
