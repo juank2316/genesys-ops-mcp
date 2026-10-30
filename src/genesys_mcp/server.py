@@ -30,8 +30,8 @@ async def _check(orgs: list[str]) -> int:
         except (GenesysError, ConfigError) as exc:
             failures += 1
             print(f"[{name}] ERROR: {exc}", file=sys.stderr)
-        finally:
-            await client(name).aclose()
+            continue
+        await client(name).aclose()
     return 1 if failures else 0
 
 

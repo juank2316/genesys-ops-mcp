@@ -72,6 +72,7 @@ class OrgProfile:
     display_name: str = ""
     environment: str = "prod"
     aliases: tuple[str, ...] = ()
+    unavailable: str = ""  # why this org cannot be used (e.g. its secret env var is not set)
 
     @property
     def domain(self) -> str:
@@ -112,6 +113,8 @@ class OrgProfile:
             "read_only": self.read_only,
             "allow_delete": self.allow_delete,
             "description": self.description,
+            "available": not self.unavailable,
+            **({"unavailable_reason": self.unavailable} if self.unavailable else {}),
         }
 
 
@@ -132,6 +135,8 @@ class Settings:
         key = org.strip().lower()
         for profile in self.orgs.values():
             if key in profile.keys:
+                if profile.unavailable:
+                    raise ConfigError(f"Org {profile.name!r} no disponible: {profile.unavailable}")
                 return profile
         raise ConfigError(f"Org {org!r} no está configurada (ni como nombre ni como alias). Orgs disponibles: {available}.")
 
@@ -152,11 +157,15 @@ def config_path() -> Path | None:
 
 
 def _profile_from_table(name: str, table: dict) -> OrgProfile:
-    secret = table.get("client_secret", "")
+    secret, missing = table.get("client_secret", ""), ""
     if not secret and (env_name := table.get("client_secret_env")):
         secret = os.environ.get(env_name, "")
         if not secret:
-            raise ConfigError(f"Org {name!r}: la variable de entorno {env_name} (client_secret_env) está vacía.")
+            # not fatal for the whole file: team members may not hold every client's secret
+            missing = (
+                f"la variable de entorno {env_name} no está definida en este equipo. "
+                "Pedí el paquete de secretos (`genesys-mcp secrets import`) y reiniciá Claude."
+            )
     client_id = table.get("client_id", "")
     if not client_id and (env_name := table.get("client_id_env")):
         client_id = os.environ.get(env_name, "")
@@ -166,8 +175,8 @@ def _profile_from_table(name: str, table: dict) -> OrgProfile:
     aliases = table.get("aliases", [])
     if not isinstance(aliases, list) or not all(isinstance(a, str) and a.strip() for a in aliases):
         raise ConfigError(f"Org {name!r}: aliases debe ser una lista de textos, p.ej. aliases = [\"acme\"].")
-    if not (client_id and secret):
-        raise ConfigError(f"Org {name!r}: faltan client_id / client_secret.")
+    if not client_id or not (secret or missing):
+        raise ConfigError(f"Org {name!r}: faltan client_id / client_secret_env.")
     if "region" not in table:
         raise ConfigError(f"Org {name!r}: falta 'region'.")
     profile = OrgProfile(
@@ -183,6 +192,7 @@ def _profile_from_table(name: str, table: dict) -> OrgProfile:
         display_name=str(table.get("display_name", "")),
         environment=environment,
         aliases=tuple(a.strip() for a in aliases),
+        unavailable=missing,
     )
     try:
         profile.domain  # validate region early

@@ -71,10 +71,15 @@ def test_invalid_configs_are_rejected(tmp_path, monkeypatch, content, message):
         load_settings()
 
 
-def test_missing_env_secret_is_reported(tmp_path, monkeypatch):
+def test_missing_env_secret_only_disables_that_org(tmp_path, monkeypatch):
     cfg = tmp_path / "orgs.toml"
-    cfg.write_text('[orgs.x]\nregion = "us-east-1"\nclient_id = "a"\nclient_secret_env = "NOPE_XYZ"\n', encoding="utf-8")
+    cfg.write_text(
+        LAB + '[orgs.x]\nregion = "us-east-1"\nclient_id = "a"\nclient_secret_env = "NOPE_XYZ"\n', encoding="utf-8"
+    )
     monkeypatch.setenv("GENESYS_MCP_CONFIG", str(cfg))
     monkeypatch.delenv("NOPE_XYZ", raising=False)
+    s = load_settings()
+    assert s.get("lab").client_secret == "b"
     with pytest.raises(ConfigError, match="NOPE_XYZ"):
-        load_settings()
+        s.get("x")
+    assert s.orgs["x"].public_view()["available"] is False
